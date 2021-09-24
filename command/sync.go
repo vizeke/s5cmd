@@ -362,11 +362,12 @@ func (s Sync) PlanRun(ctx context.Context, onlySource, onlyDest []*url.URL, comm
 	}
 
 	// for only destination objects.
-	if s.delete { // if delete is set
+	if s.delete && len(onlyDest) > 0 {
 		urlpaths := GenerateRemovePath(onlyDest)
 		command := fmt.Sprintf("rm %v\n", strings.Join(urlpaths, " "))
 		fmt.Fprint(w, command)
 	}
+
 	w.Close()
 }
 
